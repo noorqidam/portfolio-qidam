@@ -1,4 +1,4 @@
-import useSwr from "swr";
+import { useState } from "react";
 
 export const fetcher = (url) =>
   fetch(url).then(async (res) => {
@@ -10,12 +10,24 @@ export const fetcher = (url) =>
     }
   });
 
-export const useGetPosts = () => {
-  const { data, error, ...rest } = useSwr("/api/v1/posts", fetcher);
-  return { data, error, loading: !data && !error, ...rest };
-};
+export function useApiHandler(apiCall) {
+  const [reqState, setReqState] = useState({
+    error: null,
+    data: null,
+    loading: false,
+  });
 
-export const useGetPostById = (id) => {
-  const { data, error, ...rest} = useSwr(id ? `/api/v1/posts/${id}` : null, fetcher)
-  return { data, error, loading: !data && !error, ...rest}
+  const handler = async (...data) => {
+    setReqState({ error: null, data: null, loading: true });
+    try {
+      const json = await apiCall(...data);
+      setReqState({ error: null, data: json.data, loading: false });
+      return json.data;
+    } catch (e) {
+      const message = (e.response && e.response.data);
+      setReqState({ error: message, data: null, loading: false });
+      return Promise.reject(message);
+    }
+  };
+  return [handler, { ...reqState }];
 }

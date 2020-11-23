@@ -1,8 +1,8 @@
-import BaseLayout from "@/components/layouts/BaseLayout";
+import BaseLayout from "components/layouts/BaseLayout";
 // import BasePage from "../components/BasePage";
 import { Container, Row, Col } from "reactstrap";
 import Typed from "react-typed";
-import { useGetUser } from "@/actions/user";
+import { useGetUser } from "actions/user";
 
 const ROLES = [
   "Developer",

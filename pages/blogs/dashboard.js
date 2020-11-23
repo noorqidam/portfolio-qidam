@@ -2,14 +2,14 @@ import BaseLayout from "components/layouts/BaseLayout";
 import BasePage from "components/BasePage";
 import withAuth from "hoc/withAuth";
 
-const Secret = ({ user, loading }) => {
+const Dashboard = ({ user, loading }) => {
   return (
     <BaseLayout user={user} loading={loading}>
-      <BasePage>
-        <h1>I am Secret Page - {user.name}</h1>
+      <BasePage header="Dashboard">
+        <h1>Some Text</h1>
       </BasePage>
     </BaseLayout>
   );
 };
 
-export default withAuth(Secret)();
+export default withAuth(Dashboard)("admin");

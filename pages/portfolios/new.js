@@ -1,14 +1,16 @@
-import BaseLayout from '@/components/layouts/BaseLayout';
-import BasePage from '@/components/BasePage';
-import withAuth from '@/hoc/withAuth';
-import { Row, Col } from 'reactstrap';
-import PortfolioForm from '@/components/PortfolioForm';
-import { createPortfolio } from '@/actions/portfolios';
+import BaseLayout from "components/layouts/BaseLayout";
+import BasePage from "components/BasePage";
+import withAuth from "hoc/withAuth";
+import { Row, Col } from "reactstrap";
+import PortfolioForm from "components/PortfolioForm";
+import { useCreatePortfolio } from "actions/portfolios";
+import Redirect from "components/shared/Redirect";
 
-const PortfolioNew = ({user, loading: userLoading}) => {
+const PortfolioNew = ({ user, loading: userLoading }) => {
+  const [createPortfolio, { data, loading, error }] = useCreatePortfolio();
 
-  const _createPortfolio = (data) => {
-    createPortfolio(data)
+  if (data) {
+    return <Redirect to="/portfolios" />;
   }
 
   return (
@@ -16,12 +18,13 @@ const PortfolioNew = ({user, loading: userLoading}) => {
       <BasePage header="Create Portfolio">
         <Row>
           <Col md="8">
-            <PortfolioForm onSubmit={_createPortfolio} />
+          <PortfolioForm onSubmit={createPortfolio} />
+            { error && <div className="alert alert-danger mt-2">{error}</div>}
           </Col>
         </Row>
       </BasePage>
     </BaseLayout>
-  )
-}
+  );
+};
 
-export default withAuth(PortfolioNew)('admin');
+export default withAuth(PortfolioNew)("admin");

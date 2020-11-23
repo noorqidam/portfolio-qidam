@@ -1,14 +1,28 @@
-import BaseLayout from "@/components/layouts/BaseLayout";
-import BasePage from "@/components/BasePage";
-import { Row, Col } from "reactstrap";
+import BaseLayout from "components/layouts/BaseLayout";
+import BasePage from "components/BasePage";
+import { Row, Col, Button } from "reactstrap";
 import { useRouter } from "next/router";
-import { useGetUser } from "@/actions/user";
-import PortfolioApi from "@/lib/api/portfolios";
-import PortfolioCard from "@/components/PortfolioCard";
+import { useGetUser } from "actions/user";
+import { useDeletePortfolio } from "actions/portfolios";
+import PortfolioApi from "lib/api/portfolios";
+import PortfolioCard from "components/PortfolioCard";
+import { isAuthorized } from "utils/auth0";
+import { useState } from "react";
 
-const Portfolios = ({ portfolios }) => {
+const Portfolios = ({ portfolios: initialPortfolios }) => {
   const router = useRouter();
+  const [portfolios, setPortfolios] = useState(initialPortfolios);
   const { data: dataU, loading: loadingU } = useGetUser();
+  const [deletePortfolio, {data, error}] = useDeletePortfolio();
+
+  const _deletePortfolio = async (e, portfolioId) => {
+    e.stopPropagation();
+    const isConfirm = confirm('Are you sure you want to delete this portfolio?');
+    if (isConfirm) {
+      await deletePortfolio(portfolioId);
+      setPortfolios(portfolios.filter(p => p._id !== portfolioId));
+    }
+  }
 
   return (
     <BaseLayout user={dataU} loading={loadingU}>
@@ -22,7 +36,26 @@ const Portfolios = ({ portfolios }) => {
               }}
               md="4"
             >
-              <PortfolioCard portfolio={portfolio} />
+              <PortfolioCard portfolio={portfolio}>
+                {dataU && isAuthorized(dataU, "admin") && (
+                  <>
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        router.push(
+                          "/portfolios/[id]/edit",
+                          `/portfolios/${portfolio._id}/edit`
+                        );
+                      }}
+                      className="mr-2"
+                      color="warning"
+                    >
+                      Edit
+                    </Button>
+                    <Button onClick={(e)=> _deletePortfolio(e, portfolio._id)} color="danger">Delete</Button>
+                  </>
+                )}
+              </PortfolioCard>
             </Col>
           ))}
         </Row>
@@ -37,6 +70,12 @@ const Portfolios = ({ portfolios }) => {
 export async function getStaticProps() {
   const json = await new PortfolioApi().getAll();
   const portfolios = json.data;
+  if (!portfolios) {
+    return {
+      notFound: true,
+    }
+  }
+
   return {
     props: { portfolios },
   };

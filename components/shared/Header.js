@@ -1,12 +1,23 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { Collapse, Navbar, NavbarToggler, Nav, NavItem } from "reactstrap";
+import { isAuthorized } from "utils/auth0";
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  Nav,
+  NavItem,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
 
 const BsNavLink = (props) => {
-  const { href, title } = props;
+  const { href, title, className = "" } = props;
   return (
     <Link href={href}>
-      <a className="nav-link port-navbar-link">{title}</a>
+      <a className={`nav-link port-navbar-link ${className}`}>{title}</a>
     </Link>
   );
 };
@@ -28,6 +39,46 @@ const LogoutLink = () => (
     Logout
   </a>
 );
+
+const AdminMenu = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <Dropdown
+      className="port-navbar-link port-dropdown-menu"
+      nav
+      isOpen={isOpen}
+      toggle={() => setIsOpen(!isOpen)}
+    >
+      <DropdownToggle className="port-dropdown-toggle" nav caret>
+        Admin
+      </DropdownToggle>
+      <DropdownMenu right>
+        <DropdownItem>
+          <BsNavLink
+            className="port-dropdown-item"
+            href="/portfolios/new"
+            title="Create Portfolio"
+          />
+        </DropdownItem>
+        <DropdownItem>
+            <BsNavLink
+              className="port-dropdown-item"
+              href="/blogs/editor"
+              title="Blog Editor"
+            />
+          </DropdownItem>
+          <DropdownItem>
+            <BsNavLink
+              className="port-dropdown-item"
+              href="/blogs/dashboard"
+              title="Dashboard"
+            />
+          </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
+  );
+};
 
 const Header = ({ user, loading, className }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -73,20 +124,23 @@ const Header = ({ user, loading, className }) => {
             </NavItem> */}
           </Nav>
           <Nav navbar>
-          { !loading &&
+            {!loading && (
               <>
-                { user &&
-                  <NavItem className="port-navbar-item">
-                    <LogoutLink />
-                  </NavItem>
-                }
-                { !user &&
+                {user && (
+                  <>
+                    {isAuthorized(user, 'admin') && <AdminMenu /> }
+                    <NavItem className="port-navbar-item">
+                      <LogoutLink />
+                    </NavItem>
+                  </>
+                )}
+                {!user && (
                   <NavItem className="port-navbar-item">
                     <LoginLink />
                   </NavItem>
-                }
+                )}
               </>
-            }
+            )}
           </Nav>
         </Collapse>
       </Navbar>
