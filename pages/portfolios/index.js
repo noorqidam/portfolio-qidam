@@ -70,6 +70,7 @@ const Portfolios = ({ portfolios: initialPortfolios }) => {
 export async function getStaticProps() {
   const json = await new PortfolioApi().getAll();
   const portfolios = json.data;
+  
   if (!portfolios) {
     return {
       notFound: true,
