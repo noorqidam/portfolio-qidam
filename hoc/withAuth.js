@@ -10,7 +10,7 @@ const withAuth = (Component) => (role) => {
     }
 
     if (!data) {
-      return <Redirect ssr to="api/v1/login" />;
+      return <Redirect ssr to="/api/v1/login" />;
     } else {
       if (role && !isAuthorized(data, role)) {
         return <Redirect ssr to="/api/v1/login" />;
