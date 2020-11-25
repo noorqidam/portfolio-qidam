@@ -1,3 +1,14 @@
+@import "./shared/fonts";
+
+// Components
+@import "./components/header";
+
+// Pages
+@import "./index";
+@import "./portfolio";
+@import "./blogs";
+@import "./about";
+
 html,
 body {
   height: 100%;
@@ -33,12 +44,13 @@ body {
   letter-spacing: 2px;
 }
 
-@import "./shared/fonts";
+.avatar-box {
+  img {
+    height: 50px;
+    border-radius: 50%;
+  }
 
-// Components
-@import "./components/header";
-
-// Pages
-@import "./index";
-@import "./portfolio";
-@import "./blogs";
+  .subtitle {
+    font-size: 14px;
+  }
+}

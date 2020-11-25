@@ -1,6 +1,6 @@
-import BaseLayout from "components/layouts/BaseLayout";
-import BasePage from '@/components/BasePage';
-import withAuth from '@/hoc/withAuth';
+import BaseLayout from 'components/layouts/BaseLayout';
+import BasePage from 'components/BasePage';
+import withAuth from 'hoc/withAuth';
 import { Editor } from 'slate-simple-editor';
 import { useCreateBlog } from 'actions/blogs';
 import { toast } from 'react-toastify';
@@ -27,6 +27,6 @@ const BlogEditor = ({user, loading}) => {
       </BasePage>
     </BaseLayout>
   )
-};
+}
 
-export default withAuth(BlogEditor)("admin");
+export default withAuth(BlogEditor)('admin');
