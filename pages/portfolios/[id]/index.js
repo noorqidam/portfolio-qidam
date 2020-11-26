@@ -79,7 +79,7 @@ export async function getStaticProps({ params }) {
   if (!portfolio) {
     return {
       notFound: true,
-    }
+    };
   }
   return { props: { portfolio } };
 }

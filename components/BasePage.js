@@ -3,10 +3,11 @@ import { Container } from "reactstrap";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-const PageHeader = ({ header }) =>
+const PageHeader = ({ header }) => (
   <div className="page-header">
     <div className="page-header-title">{header}</div>
   </div>
+);
 
 const BasePage = (props) => {
   const router = useRouter();

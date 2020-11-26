@@ -64,9 +64,6 @@ const Portfolios = ({ portfolios: initialPortfolios }) => {
   );
 };
 
-// This function is called during the build time
-// Improved performance of page
-// It will create static page with dynamic data
 export async function getStaticProps() {
   const json = await new PortfolioApi().getAll();
   const portfolios = json.data;
