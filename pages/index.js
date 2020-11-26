@@ -1,6 +1,5 @@
 import BaseLayout from "components/layouts/BaseLayout";
 import { useState, useEffect, useRef } from "react";
-// import BasePage from "../components/BasePage";
 import { Container, Row, Col } from "reactstrap";
 import Typed from "react-typed";
 import { useGetUser } from "actions/user";
@@ -19,7 +18,7 @@ const Index = () => {
   const { data, loading } = useGetUser();
   const flipInterval = useRef();
 
-  useEffect(() => { 
+  useEffect(() => {
     startAnimation();
     return () => flipInterval.current && clearInterval(flipInterval.current);
   }, []);
@@ -47,25 +46,28 @@ const Index = () => {
               <div className="hero-section">
                 <div className={`flipper ${isFlipping ? "isFlipping" : ""}`}>
                   <div className="front">
-                    <div className="hero-section-content">
-                      <h2>Full Stack Developer</h2>
-                      <div className="hero-section-content-intro">
-                        Have a look at my portfolio npm run dev and job history.
+                    <div className="image image-1">
+                      <div className="hero-section-content">
+                        <h2>Full Stack Developer</h2>
+                        <div className="hero-section-content-intro">
+                          Have a look at my portfolio npm run dev and job
+                          history.
+                        </div>
                       </div>
                     </div>
-                    <img className="image" src="/images/section-1.jpg" />
                     <div className="shadow-custom">
                       <div className="shadow-inner"></div>
                     </div>
                   </div>
                   <div className="back">
-                    <div className="hero-section-content">
-                      <h2>Full Stack Developer</h2>
-                      <div className="hero-section-content-intro">
-                        Have a look at my portfolio npm run dev and job history.
+                    <div className="image image-2">
+                      <div className="hero-section-content">
+                        <h2>React and Next is Amazing!</h2>
+                        <div className="hero-section-content-intro">
+                          Software developer ready for a project of any type!.
+                        </div>
                       </div>
                     </div>
-                    <img className="image" src="/images/section-2.jpg" />
                     <div className="shadow-custom shadow-custom-orange">
                       <div className="shadow-inner"></div>
                     </div>

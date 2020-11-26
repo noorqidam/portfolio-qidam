@@ -26,7 +26,7 @@ const Portfolios = ({ portfolios: initialPortfolios }) => {
 
   return (
     <BaseLayout user={dataU} loading={loadingU}>
-      <BasePage header="Portfolios" className="portfolio-page">
+      <BasePage className="portfolio-page">
         <Row>
           {portfolios.map((portfolio) => (
             <Col
@@ -79,7 +79,6 @@ export async function getStaticProps() {
 
   return {
     props: { portfolios },
-    // unstable_revalidate: 1
   };
 }
 

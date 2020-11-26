@@ -7,7 +7,7 @@ const PortfolioCard = ({ portfolio, children }) => {
       <CardHeader className="portfolio-card-header">
         {portfolio.jobTitle}
       </CardHeader>
-      <CardBody>
+      <CardBody className="portfolio-card-body">
         <p className="portfolio-card-city">{portfolio.location}</p>
         <CardTitle className="portfolio-card-title">
           {portfolio.title}

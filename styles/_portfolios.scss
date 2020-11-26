@@ -28,8 +28,12 @@
       font-size: 17px;
     }
 
+    &-body {
+      min-height: 290px;
+    }
+
     &-title {
-      font-size: 30px;
+      font-size: 22px;
       font-weight: 700;
       line-height: 1.1;
       text-transform: uppercase;
