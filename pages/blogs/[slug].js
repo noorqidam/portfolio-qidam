@@ -43,10 +43,10 @@ export async function getStaticProps({ params }) {
     data: { blog, author },
   } = await new BlogApi().getBySlug(params.slug);
 
-  if (!blog, !author) {
+  if ((!blog, !author)) {
     return {
       notFound: true,
-    }
+    };
   }
 
   return { props: { blog, author } };

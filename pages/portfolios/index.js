@@ -13,16 +13,18 @@ const Portfolios = ({ portfolios: initialPortfolios }) => {
   const router = useRouter();
   const [portfolios, setPortfolios] = useState(initialPortfolios);
   const { data: dataU, loading: loadingU } = useGetUser();
-  const [deletePortfolio, {data, error}] = useDeletePortfolio();
+  const [deletePortfolio, { data, error }] = useDeletePortfolio();
 
   const _deletePortfolio = async (e, portfolioId) => {
     e.stopPropagation();
-    const isConfirm = confirm('Are you sure you want to delete this portfolio?');
+    const isConfirm = confirm(
+      "Are you sure you want to delete this portfolio?"
+    );
     if (isConfirm) {
       await deletePortfolio(portfolioId);
-      setPortfolios(portfolios.filter(p => p._id !== portfolioId));
+      setPortfolios(portfolios.filter((p) => p._id !== portfolioId));
     }
-  }
+  };
 
   return (
     <BaseLayout user={dataU} loading={loadingU}>
@@ -52,7 +54,12 @@ const Portfolios = ({ portfolios: initialPortfolios }) => {
                     >
                       Edit
                     </Button>
-                    <Button onClick={(e)=> _deletePortfolio(e, portfolio._id)} color="danger">Delete</Button>
+                    <Button
+                      onClick={(e) => _deletePortfolio(e, portfolio._id)}
+                      color="danger"
+                    >
+                      Delete
+                    </Button>
                   </>
                 )}
               </PortfolioCard>
@@ -67,11 +74,11 @@ const Portfolios = ({ portfolios: initialPortfolios }) => {
 export async function getStaticProps() {
   const json = await new PortfolioApi().getAll();
   const portfolios = json.data;
-  
+
   if (!portfolios) {
     return {
       notFound: true,
-    }
+    };
   }
 
   return {
